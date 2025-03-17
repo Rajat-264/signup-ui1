@@ -5,6 +5,8 @@ import "./SignupForm.css";
 const SignupForm = () => {
   const [formData, setFormData] = useState({ name: "", email: "", password: "" });
 
+  const API_URL = import.meta.env.REACT_APP_API_URL; // ✅ Load API URL from .env
+
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -12,7 +14,9 @@ const SignupForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("http://localhost:5000/api/signup", formData);
+      const response = await axios.post(`${API_URL}/api/signup`, formData, {
+        withCredentials: true, // ✅ If using cookies/sessions for auth
+      });
       alert(response.data.message);
     } catch (error) {
       console.error("Error:", error);
@@ -21,10 +25,11 @@ const SignupForm = () => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <div className="form"><input type="text" name="name" placeholder="Name" onChange={handleChange} required className="name"/>
-      <input type="email" name="email" placeholder="Email" onChange={handleChange} required className="email"/>
-      <input type="password" name="password" placeholder="Password" onChange={handleChange} required className="password"/>
-      <button type="submit">Signup</button>
+      <div className="form">
+        <input type="text" name="name" placeholder="Name" onChange={handleChange} required className="name"/>
+        <input type="email" name="email" placeholder="Email" onChange={handleChange} required className="email"/>
+        <input type="password" name="password" placeholder="Password" onChange={handleChange} required className="password"/>
+        <button type="submit">Signup</button>
       </div>
     </form>
   );
