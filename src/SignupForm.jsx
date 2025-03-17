@@ -5,7 +5,7 @@ import "./SignupForm.css";
 const SignupForm = () => {
   const [formData, setFormData] = useState({ name: "", email: "", password: "" });
 
-  const API_URL = import.meta.env.REACT_APP_API_URL; // ✅ Load API URL from .env
+  const API_URL = import.meta.env.REACT_APP_API_URL; 
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -15,7 +15,7 @@ const SignupForm = () => {
     e.preventDefault();
     try {
       const response = await axios.post(`${API_URL}/api/signup`, formData, {
-        withCredentials: true, // ✅ If using cookies/sessions for auth
+        withCredentials: true, 
       });
       alert(response.data.message);
     } catch (error) {
